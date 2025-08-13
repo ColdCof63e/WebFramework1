@@ -172,7 +172,7 @@ app.get('/movies/edit/:id', async (req, res) => {
 })
 
 // Put or update movie
-app.put('/api/movies/id/:id', async (req, res) => {
+app.put('/movies/:id', async (req, res) => {
     let id = req.params.id
     console.log(req.body)
     try {
