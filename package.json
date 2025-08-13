@@ -4,6 +4,7 @@
   "description": "",
   "main": "appRedesigned.js",
   "scripts": {
+    "start": "node appRedesigned.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
