@@ -181,10 +181,11 @@ app.put('/movies/:id', async (req, res) => {
         if (!update)
             res.status(500).json({ message: "Movie not found" })
 
-        res.json({
-            message: "Movie update successfully",
-            movie: update
-        })
+        // res.json({
+        //     message: "Movie update successfully",
+        //     movie: update
+        // })
+        res.redirect('/movies');
     } catch (err) {
         res.status(500).send(err.message)
     }
