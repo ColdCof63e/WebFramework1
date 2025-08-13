@@ -1,0 +1,19 @@
+<h2>All Movies</h2>
+<p><a href="/movies/new">Add New Movie</a></p>
+
+<table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Movie ID</th>
+            <th>Title</th>
+            <th>Metascore</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each movies}}
+            {{> movieRow}}
+        {{/each}}
+    </tbody>
+</table>

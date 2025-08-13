@@ -1,0 +1,16 @@
+{{#isBlankMetascore Metascore}}
+<tr style="background-color: #ffe6e6;">
+{{else}}
+<tr>
+{{/isBlankMetascore}}
+    <td>{{oneBased @index}}</td>
+    <td>{{Movie_ID}}</td>
+    <td>{{Title}}</td>
+    <td>{{Metascore}}</td>
+    <td>
+        <a href="/movies/edit/{{_id}}">Edit</a>
+        <form action="/movies/{{_id}}?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Title {{Title}}: Delete this movie?')">Remove</button>
+        </form>
+    </td>
+</tr>

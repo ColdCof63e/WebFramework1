@@ -1,0 +1,21 @@
+<h2>Add New Movie</h2>
+<form action="/movies" method="POST">
+    <label>Movie ID:</label>
+    <input type="number" name="Movie_ID" required><br><br>
+
+    <label>Title:</label>
+    <input type="text" name="Title" required><br><br>
+
+    <label>Released:</label>
+    <input type="text" name="Released" placeholder="DD-MMM-YYYY"><br><br>
+
+    <label>Genre:</label>
+    <input type="text" name="Genre"><br><br>
+
+    <label>Director:</label>
+    <input type="text" name="Director"><br><br>
+
+    <button type="submit">Create Movie</button>
+</form>
+
+<p><a href="/movies">Back to all movies</a></p>

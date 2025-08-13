@@ -1,0 +1,12 @@
+<h2>Edit Movie</h2>
+<form action="/movies/{{movie._id}}?_method=PUT" method="PUT">
+    <label>Title:</label>
+    <input type="text" name="Title" value="{{movie.Title}}" required><br><br>
+
+    <label>Released:</label>
+    <input type="text" name="Released" value="{{movie.Released}}"><br><br>
+
+    <button type="submit">Update Movie</button>
+</form>
+
+<p><a href="/movies">Back to all movies</a></p>
