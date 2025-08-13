@@ -66,7 +66,7 @@ app.get('/', (req, res) => {
 // Find all movies
 app.get('/movies', async (req, res) => {
     try {
-        const movies = await Movie.find().lean()
+        const movies = await Movie.find().limit(10).lean()
         // res.json(movies)
         res.render('allMovies', { title: 'All Movies', movies });
     } catch (err) {
