@@ -2,7 +2,7 @@
 var express = require('express');
 var mongoose = require('mongoose')
 var app = express();
-var database = require('./config/database')
+// var database = require('./config/database')
 var bodyParser = require('body-parser')
 var fs = require('fs')
 const path = require('path')
@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Setting the server port (use environment variable if available, otherwise 3000)
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
 // Import express-handlebars for template rendering
 const exphbs = require('express-handlebars');
@@ -22,31 +22,18 @@ const Movie = require('./models/movies')
 // Serving static files (CSS, images, JS) from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')))
 
-mongoose.connect(database.url)
-
-// Connection events
-mongoose.connection.on('connecting', () => {
-  console.log('Mongoose is connecting to MongoDB...');
-});
-
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose connected to MongoDB!');
-});
-
-mongoose.connection.on('open', () => {
-  console.log('Mongoose connection is open.');
-});
-
-mongoose.connection.on('error', (err) => {
-  console.error('Mongoose connection error:', err);
-});
-
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected from MongoDB.');
-});
-
-mongoose.connection.on('reconnected', () => {
-  console.log('Mongoose reconnected to MongoDB!');
+const mongoUri = process.env.MONGODB_URI
+mongoose.connect(
+    mongoUri,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+    }
+).then(() => {
+    console.log('Connected to MongoDB successfully!');
+}).catch(err => {
+    console.error('MongoDB connection error:', err);
 });
 
 // Setting up Handlebars as the template engine, using .hbs file extension
