@@ -60,6 +60,9 @@ const hbs = exphbs.create({
 app.engine('.hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
+app.get('/', (req, res) => {
+    res.redirect('/movies');
+})
 // Find all movies
 app.get('/movies', async (req, res) => {
     try {
