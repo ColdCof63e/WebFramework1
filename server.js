@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const exphbs = require('express-handlebars');
 require("dotenv").config();
 
 const app = express();
@@ -10,7 +11,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'public/views'));
 
 // MongoDB connection (execute once globally)
 let isConnected = false;
