@@ -20,7 +20,8 @@ exports.getAllRestaurants = async (req, res) => {
       .sort({ restaurant_id: 1 })
       .skip(skip)
       .limit(parseInt(perPage));
-    res.json(restaurants);
+    // res.json(restaurants);
+    res.render("restaurants", restaurants)
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
