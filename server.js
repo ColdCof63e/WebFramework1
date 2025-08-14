@@ -1,3 +1,42 @@
+/*
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const path = require("path");
+const exphbs = require('express-handlebars');
+require("dotenv").config();
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'public/views'));
+
+// MongoDB connection (execute once globally)
+let isConnected = false;
+async function connectDB() {
+  if (isConnected) return;
+  await mongoose.connect(process.env.MONGO_URI);
+  isConnected = true;
+  console.log("MongoDB connected successfully");
+}
+connectDB();
+
+// Import and use your routes (adjust paths as needed)
+const restaurantRoutes = require("./routes/restaurantRoutes");
+
+app.use("/restaurants", restaurantRoutes);
+
+// Default route for health check
+app.get("/", (req, res) => res.json({ message: "API working!" }));
+
+module.exports = app;
+************************************************************************************************************ */
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -11,12 +50,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public/views")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // View Engine
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "public/views"));
 
 // MongoDB connection (execute once globally)
 let isConnected = false;
