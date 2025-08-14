@@ -21,11 +21,11 @@ async function connectDB() {
 connectDB();
 
 // Import and use your routes (adjust paths as needed)
-const restaurantRoutes = require("../routes/restaurantRoutes");
+const restaurantRoutes = require("./routes/restaurantRoutes");
 
-app.use("/api/restaurants", restaurantRoutes);
+app.use("/restaurants", restaurantRoutes);
 
 // Default route for health check
-app.get("/api", (req, res) => res.json({ message: "API working!" }));
+app.get("/", (req, res) => res.json({ message: "API working!" }));
 
 module.exports = app;
