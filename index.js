@@ -2,28 +2,28 @@
 var express = require('express');
 var mongoose = require('mongoose')
 var app = express();
-// var database = require('./config/database')
 var bodyParser = require('body-parser')
-// var fs = require('fs')
 const path = require('path')
 const methodOverride = require('method-override');
+
+// Middleware to parse incoming request bodies
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Setting the server port (use environment variable if available, otherwise 3000)
-// const port = process.env.PORT || 3000;
-
 // Import express-handlebars for template rendering
 const exphbs = require('express-handlebars');
-
 const Movie = require('./models/movies')
 
 // Serving static files (CSS, images, JS) from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')))
-
 app.set("views", path.join(__dirname, "public/views"));
 
+// Setting up Handlebars as the template engine
+app.engine('.hbs', hbs.engine);
+app.set('view engine', 'hbs');
+
+// Import the database configuration
 const mongoUri = process.env.MONGODB_URI
 mongoose.connect(
     mongoUri,
@@ -61,8 +61,6 @@ const hbs = exphbs.create({
     partialsDir: path.join(__dirname, 'public/views/partials'),
     layoutsDir: path.join(__dirname, 'public/views/layouts')
 });
-app.engine('.hbs', hbs.engine);
-app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {
     res.redirect('/movies');
@@ -220,10 +218,5 @@ app.delete('/movies/:id', async (req, res) => {
         res.status(500).send(err.message)
     }
 })
-
-// Starts the server and listen on the specified port
-// app.listen(port, () => {
-//     console.log(`Example app listening at http://localhost:${port}`)
-// });
 
 module.exports = app;
