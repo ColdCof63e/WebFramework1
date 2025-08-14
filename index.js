@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Setting the server port (use environment variable if available, otherwise 3000)
-// const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // Import express-handlebars for template rendering
 const exphbs = require('express-handlebars');
@@ -22,18 +22,20 @@ const Movie = require('./models/movies')
 // Serving static files (CSS, images, JS) from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')))
 
-const mongoUri = process.env.MONGODB_URI
-mongoose.connect(
-    mongoUri,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }
-).then(() => {
-    console.log('Connected to MongoDB successfully!');
-}).catch(err => {
-    console.error('MongoDB connection error:', err);
-});
+app.set("views", path.join(__dirname, "views"));
+
+// const mongoUri = process.env.MONGODB_URI
+// mongoose.connect(
+//     mongoUri,
+//     {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true
+//     }
+// ).then(() => {
+//     console.log('Connected to MongoDB successfully!');
+// }).catch(err => {
+//     console.error('MongoDB connection error:', err);
+// });
 
 // Setting up Handlebars as the template engine, using .hbs file extension
 const hbs = exphbs.create({
@@ -217,8 +219,8 @@ app.delete('/movies/:id', async (req, res) => {
 })
 
 // Starts the server and listen on the specified port
-// app.listen(port, () => {
-//     console.log(`Example app listening at http://localhost:${port}`)
-// });
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+});
 
-module.exports = app;
+// module.exports = app;
