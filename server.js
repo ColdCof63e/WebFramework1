@@ -2,18 +2,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-const exphbs = require('express-handlebars');
+const exphbs = require("express-handlebars");
 require("dotenv").config();
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public/views")));
 
-app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'public/views'));
+// View Engine
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+app.set("views", path.join(__dirname, "views"));
 
 // MongoDB connection (execute once globally)
 let isConnected = false;
@@ -25,12 +28,30 @@ async function connectDB() {
 }
 connectDB();
 
-// Import and use your routes (adjust paths as needed)
 const restaurantRoutes = require("./routes/restaurantRoutes");
+const Restaurant = require("./models/Restaurant");
 
-app.use("/restaurants", restaurantRoutes);
+// const port = process.env.PORT || 3000;
 
-// Default route for health check
-app.get("/", (req, res) => res.json({ message: "API working!" }));
+// Routes
+app.use("/api/restaurants", restaurantRoutes);
+
+// UI Routes
+app.get("/", async (req, res) => {
+  const restaurants = await Restaurant.find().lean();
+  console.log("Rendering home page with restaurants:", restaurants);
+  res.render("home", { restaurants });
+});
+
+app.get("/restaurants/:id", async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.id).lean();
+    console.log("Rendering restaurant detail page for ID:", restaurant);
+    res.render("detail", restaurant);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to load restaurant details.");
+  }
+});
 
 module.exports = app;
