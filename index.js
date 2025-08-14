@@ -22,7 +22,7 @@ const Movie = require('./models/movies')
 // Serving static files (CSS, images, JS) from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "public/views"));
 
 // const mongoUri = process.env.MONGODB_URI
 // mongoose.connect(
