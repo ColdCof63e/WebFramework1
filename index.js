@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 var app = express();
 // var database = require('./config/database')
 var bodyParser = require('body-parser')
-var fs = require('fs')
+// var fs = require('fs')
 const path = require('path')
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Setting the server port (use environment variable if available, otherwise 3000)
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
 // Import express-handlebars for template rendering
 const exphbs = require('express-handlebars');
@@ -24,18 +24,18 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.set("views", path.join(__dirname, "public/views"));
 
-// const mongoUri = process.env.MONGODB_URI
-// mongoose.connect(
-//     mongoUri,
-//     {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true
-//     }
-// ).then(() => {
-//     console.log('Connected to MongoDB successfully!');
-// }).catch(err => {
-//     console.error('MongoDB connection error:', err);
-// });
+const mongoUri = process.env.MONGODB_URI
+mongoose.connect(
+    mongoUri,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
+).then(() => {
+    console.log('Connected to MongoDB successfully!');
+}).catch(err => {
+    console.error('MongoDB connection error:', err);
+});
 
 // Setting up Handlebars as the template engine, using .hbs file extension
 const hbs = exphbs.create({
@@ -100,7 +100,7 @@ app.get('/api/movies/title/:title', async (req, res) => {
     }
 })
 
-
+// To post a new movie
 app.get('/movies/new', (req, res) => {
     res.render('newMovie', { title: 'Add New Movie' });
 });
@@ -154,6 +154,7 @@ app.post('/movies', async (req, res) => {
     }
 })
 
+// Edit movie
 app.get('/movies/edit/:id', async (req, res) => {
     try {
         const movie = await Movie.findById(req.params.id).lean();
@@ -221,8 +222,8 @@ app.delete('/movies/:id', async (req, res) => {
 })
 
 // Starts the server and listen on the specified port
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-});
+// app.listen(port, () => {
+//     console.log(`Example app listening at http://localhost:${port}`)
+// });
 
-// module.exports = app;
+module.exports = app;
