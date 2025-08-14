@@ -57,7 +57,9 @@ const hbs = exphbs.create({
             }
             return options.inverse(this);
         }
-    }
+    },
+    partialsDir: path.join(__dirname, 'public/views/partials'),
+    layoutsDir: path.join(__dirname, 'public/views/layouts')
 });
 app.engine('.hbs', hbs.engine);
 app.set('view engine', 'hbs');
